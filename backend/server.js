@@ -17,12 +17,29 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// ============= ADD THESE LINES =============
+// Import routes
+const authRoutes = require('./routes/authRoutes');
+
+// Mount routes
+app.use('/api/auth', authRoutes);
+console.log('🔌 Mounted /api/auth routes');
+// ===========================================
+
 // Test route
 app.get('/', (req, res) => {
   res.json({ 
     message: '🎓 Student Attendance Management System API',
     version: '1.0.0',
     status: 'running',
+    endpoints: {
+      auth: {
+        register: 'POST /api/auth/register',
+        login: 'POST /api/auth/login',
+        getMe: 'GET /api/auth/me',
+        logout: 'POST /api/auth/logout'
+      }
+    },
     timestamp: new Date().toISOString(),
     author: 'Somya Ranjan Sahoo'
   });
